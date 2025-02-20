@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.example.assignment3.viewmodels.BookViewModel
+import com.example.assignment3.viewModels.BookViewModel
 import com.example.assignment3.models.Book
 
 @Composable

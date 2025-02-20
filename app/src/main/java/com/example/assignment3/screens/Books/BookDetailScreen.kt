@@ -7,7 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.example.assignment3.viewmodels.BookViewModel
+import com.example.assignment3.viewModels.BookViewModel
 
 @Composable
 fun BookDetailScreen(navController: NavController, bookId: Int, viewModel: BookViewModel = viewModel()) {
@@ -16,7 +16,10 @@ fun BookDetailScreen(navController: NavController, bookId: Int, viewModel: BookV
     Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
         Text(text = book?.title ?: "Unknown Book", style = MaterialTheme.typography.headlineLarge, modifier = Modifier.padding(bottom = 16.dp))
         Text(text = "Author: ${book?.author ?: "Unknown"}", style = MaterialTheme.typography.bodyLarge, modifier = Modifier.padding(bottom = 8.dp))
-        Text(text = "Details: ${book?.details ?: "No details available"}", style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(bottom = 8.dp))
+        Text(text = "Format: ${book?.format ?: "Unknown"}", style = MaterialTheme.typography.bodyLarge, modifier = Modifier.padding(bottom = 8.dp))
+        Text(text = "Number of Pages: ${book?.numPages ?: "Unknown"}", style = MaterialTheme.typography.bodyLarge, modifier = Modifier.padding(bottom = 8.dp))
+        Text(text = "Genre: ${book?.genre ?: "Unknown"}", style = MaterialTheme.typography.bodyLarge, modifier = Modifier.padding(bottom = 8.dp))
+        Text(text = "Notes: ${book?.notes ?: "No notes available"}", style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(bottom = 8.dp))
 
         Button(
             onClick = { navController.popBackStack() },

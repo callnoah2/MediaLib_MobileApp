@@ -8,13 +8,16 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.assignment3.models.Book
-import com.example.assignment3.viewmodels.BookViewModel
+import com.example.assignment3.viewModels.BookViewModel
 
 @Composable
 fun CreateBookScreen(navController: NavController, viewModel: BookViewModel = viewModel()) {
     var title by remember { mutableStateOf("") }
     var author by remember { mutableStateOf("") }
-    var details by remember { mutableStateOf("") }
+    var format by remember { mutableStateOf("") }
+    var numPages by remember { mutableStateOf(0) }
+    var genre by remember { mutableStateOf("") }
+    var notes by remember { mutableStateOf("") }
 
     Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
         Text(text = "Add Book", style = MaterialTheme.typography.headlineLarge, modifier = Modifier.padding(bottom = 16.dp))
@@ -34,16 +37,45 @@ fun CreateBookScreen(navController: NavController, viewModel: BookViewModel = vi
         )
 
         OutlinedTextField(
-            value = details,
-            onValueChange = { details = it },
-            label = { Text("Details") },
+            value = format,
+            onValueChange = { format = it },
+            label = { Text("Format") },
+            modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
+        )
+
+        OutlinedTextField(
+            value = numPages.toString(),
+            onValueChange = { numPages = it.toIntOrNull() ?: 0 },
+            label = { Text("Number of Pages") },
+            modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
+        )
+
+        OutlinedTextField(
+            value = genre,
+            onValueChange = { genre = it },
+            label = { Text("Genre") },
+            modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
+        )
+
+        OutlinedTextField(
+            value = notes,
+            onValueChange = { notes = it },
+            label = { Text("Notes") },
             modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
         )
 
         Button(
             onClick = {
                 if (title.isNotEmpty() && author.isNotEmpty()) {
-                    viewModel.addBook(Book(id = viewModel.getNextId(), title = title, author = author, details = details))
+                    viewModel.addBook(Book(
+                        id = viewModel.getNextId(),
+                        title = title,
+                        author = author,
+                        format = format,
+                        numPages = numPages,
+                        genre = genre,
+                        notes = notes
+                    ))
                     navController.popBackStack()
                 }
             },
