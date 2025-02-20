@@ -5,10 +5,13 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.example.assignment3.models.Movie
+import com.example.assignment3.viewModels.MovieViewModel
 
 @Composable
-fun CreateMovieScreen(navController: NavController) {
+fun CreateMovieScreen(navController: NavController, viewModel: MovieViewModel = viewModel()) {
     var title by remember { mutableStateOf("") }
     var genre by remember { mutableStateOf("") }
     var rating by remember { mutableStateOf("") }
@@ -60,10 +63,22 @@ fun CreateMovieScreen(navController: NavController) {
         )
         Button(
             onClick = {
-                // Handle save action here
-                navController.navigateUp()
+                if (title.isNotEmpty() && genre.isNotEmpty() && rating.isNotEmpty() && runtime.isNotEmpty() && format.isNotEmpty()) {
+                    viewModel.addMovie(
+                        Movie(
+                            id = viewModel.getNextId(),
+                            title = title,
+                            genre = genre,
+                            rating = rating,
+                            runtime = runtime.toIntOrNull() ?: 0,
+                            format = format,
+                            notes = notes
+                        )
+                    )
+                    navController.popBackStack()
+                }
             },
-            modifier = Modifier.align(Alignment.End)
+            modifier = Modifier.fillMaxWidth().padding(top = 16.dp)
         ) {
             Text("Save")
         }
