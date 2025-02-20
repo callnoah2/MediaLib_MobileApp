@@ -5,43 +5,67 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.example.assignment3.models.Movie
-import com.example.assignment3.viewmodels.MovieViewModel
 
 @Composable
-fun CreateMovieScreen(navController: NavController, viewModel: MovieViewModel = viewModel()) {
+fun CreateMovieScreen(navController: NavController) {
     var title by remember { mutableStateOf("") }
-    var details by remember { mutableStateOf("") }
+    var genre by remember { mutableStateOf("") }
+    var rating by remember { mutableStateOf("") }
+    var runtime by remember { mutableStateOf("") }
+    var format by remember { mutableStateOf("") }
+    var notes by remember { mutableStateOf("") }
 
-    Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
-        Text(text = "Add Movie", style = MaterialTheme.typography.headlineLarge, modifier = Modifier.padding(bottom = 16.dp))
-
-        OutlinedTextField(
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        TextField(
             value = title,
             onValueChange = { title = it },
             label = { Text("Title") },
-            modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
+            modifier = Modifier.fillMaxWidth()
         )
-
-        OutlinedTextField(
-            value = details,
-            onValueChange = { details = it },
-            label = { Text("Details") },
-            modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
+        TextField(
+            value = genre,
+            onValueChange = { genre = it },
+            label = { Text("Genre") },
+            modifier = Modifier.fillMaxWidth()
         )
-
+        TextField(
+            value = rating,
+            onValueChange = { rating = it },
+            label = { Text("Rating") },
+            modifier = Modifier.fillMaxWidth()
+        )
+        TextField(
+            value = runtime,
+            onValueChange = { runtime = it },
+            label = { Text("Runtime (minutes)") },
+            modifier = Modifier.fillMaxWidth()
+        )
+        TextField(
+            value = format,
+            onValueChange = { format = it },
+            label = { Text("Format") },
+            modifier = Modifier.fillMaxWidth()
+        )
+        TextField(
+            value = notes,
+            onValueChange = { notes = it },
+            label = { Text("Notes") },
+            modifier = Modifier.fillMaxWidth()
+        )
         Button(
             onClick = {
-                if (title.isNotEmpty()) {
-                    viewModel.addMovie(Movie(id = viewModel.getNextId(), title = title, details = details))
-                    navController.popBackStack()
-                }
+                // Handle save action here
+                navController.navigateUp()
             },
-            modifier = Modifier.fillMaxWidth().padding(top = 16.dp)
+            modifier = Modifier.align(Alignment.End)
         ) {
-            Text("Save Movie")
+            Text("Save")
         }
     }
 }

@@ -10,8 +10,8 @@ import androidx.navigation.NavController
 import com.example.assignment3.viewmodels.BoardGameViewModel
 
 @Composable
-fun BoardGameDetailScreen(navController: NavController, gameId: Int, viewModel: BoardGameViewModel = viewModel()) {
-    val game = viewModel.getBoardGameById(gameId)
+fun BoardGameDetailScreen(navController: NavController, boardGameId: Int, viewModel: BoardGameViewModel = viewModel()) {
+    val game = viewModel.getBoardGameById(boardGameId)
 
     Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
         Text(text = game?.title ?: "Unknown Game", style = MaterialTheme.typography.headlineLarge, modifier = Modifier.padding(bottom = 16.dp))
