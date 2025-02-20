@@ -3,14 +3,15 @@ package com.example.assignment3.screens.VideoGames
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.example.assignment3.viewmodels.VideoGameViewModel
 import com.example.assignment3.models.VideoGame
+import com.example.assignment3.viewModels.VideoGameViewModel
 
 @Composable
 fun VideoGameScreen(navController: NavController, viewModel: VideoGameViewModel = viewModel()) {
@@ -41,6 +42,11 @@ fun VideoGameItem(game: VideoGame, onClick: () -> Unit) {
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(text = game.title, style = MaterialTheme.typography.bodyLarge)
+            Text(text = game.developer, style = MaterialTheme.typography.bodyMedium)
+            Text(text = game.genre, style = MaterialTheme.typography.bodyMedium)
+            Text(text = game.rating, style = MaterialTheme.typography.bodyMedium)
+            Text(text = game.platform, style = MaterialTheme.typography.bodyMedium)
+            Text(text = game.notes, style = MaterialTheme.typography.bodySmall)
         }
     }
 }

@@ -11,7 +11,7 @@ import com.example.assignment3.models.BoardGame
 import com.example.assignment3.viewModels.BoardGameViewModel
 
 @Composable
-fun AddBoardGameScreen(navController: NavController, viewModel: BoardGameViewModel = viewModel()) {
+fun CreateBoardGameScreen(navController: NavController, viewModel: BoardGameViewModel = viewModel()) {
     var title by remember { mutableStateOf("") }
     var notes by remember { mutableStateOf("") }
     var minPlayers by remember { mutableStateOf(1) }

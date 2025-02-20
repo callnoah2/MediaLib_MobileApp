@@ -8,40 +8,79 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.assignment3.models.VideoGame
-import com.example.assignment3.viewmodels.VideoGameViewModel
+import com.example.assignment3.viewModels.VideoGameViewModel
 
 @Composable
 fun CreateVideoGameScreen(navController: NavController, viewModel: VideoGameViewModel = viewModel()) {
     var title by remember { mutableStateOf("") }
-    var details by remember { mutableStateOf("") }
+    var developer by remember { mutableStateOf("") }
+    var genre by remember { mutableStateOf("") }
+    var rating by remember { mutableStateOf("") }
+    var platform by remember { mutableStateOf("") }
+    var notes by remember { mutableStateOf("") }
 
-    Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
-        Text(text = "Add Video Game", style = MaterialTheme.typography.headlineLarge, modifier = Modifier.padding(bottom = 16.dp))
-
-        OutlinedTextField(
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        TextField(
             value = title,
             onValueChange = { title = it },
             label = { Text("Title") },
-            modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
+            modifier = Modifier.fillMaxWidth()
         )
-
-        OutlinedTextField(
-            value = details,
-            onValueChange = { details = it },
-            label = { Text("Details") },
-            modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
+        TextField(
+            value = developer,
+            onValueChange = { developer = it },
+            label = { Text("Developer") },
+            modifier = Modifier.fillMaxWidth()
         )
-
+        TextField(
+            value = genre,
+            onValueChange = { genre = it },
+            label = { Text("Genre") },
+            modifier = Modifier.fillMaxWidth()
+        )
+        TextField(
+            value = rating,
+            onValueChange = { rating = it },
+            label = { Text("Rating") },
+            modifier = Modifier.fillMaxWidth()
+        )
+        TextField(
+            value = platform,
+            onValueChange = { platform = it },
+            label = { Text("Platform") },
+            modifier = Modifier.fillMaxWidth()
+        )
+        TextField(
+            value = notes,
+            onValueChange = { notes = it },
+            label = { Text("Notes") },
+            modifier = Modifier.fillMaxWidth()
+        )
         Button(
             onClick = {
-                if (title.isNotEmpty()) {
-                    viewModel.addVideoGame(VideoGame(id = viewModel.getNextId(), title = title, details = details))
+                if (title.isNotEmpty() && developer.isNotEmpty() && genre.isNotEmpty() && rating.isNotEmpty() && platform.isNotEmpty()) {
+                    viewModel.addVideoGame(
+                        VideoGame(
+                            id = viewModel.getNextId(),
+                            title = title,
+                            developer = developer,
+                            genre = genre,
+                            rating = rating,
+                            platform = platform,
+                            notes = notes
+                        )
+                    )
                     navController.popBackStack()
                 }
             },
             modifier = Modifier.fillMaxWidth().padding(top = 16.dp)
         ) {
-            Text("Save Video Game")
+            Text("Save")
         }
     }
 }
