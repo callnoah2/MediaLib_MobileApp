@@ -2,10 +2,10 @@ package com.example.assignment3.viewModels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.assignment3.models.VideoGame
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import com.example.assignment3.models.VideoGame
 
 class VideoGameViewModel : ViewModel() {
     private val _videoGames = MutableStateFlow<List<VideoGame>>(emptyList())
@@ -17,11 +17,11 @@ class VideoGameViewModel : ViewModel() {
         }
     }
 
-    fun getVideoGameById(id: Int): VideoGame? {
-        return _videoGames.value.find { it.id == id }
+    fun getNextId(): Int {
+        return _videoGames.value.size + 1
     }
 
-    fun getNextId(): Int {
-        return (_videoGames.value.maxOfOrNull { it.id } ?: 0) + 1
+    fun getVideoGameById(id: Int): VideoGame? {
+        return _videoGames.value.find { it.id == id }
     }
 }

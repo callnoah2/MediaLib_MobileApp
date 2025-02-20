@@ -36,10 +36,10 @@ class MainActivity : ComponentActivity() {
                         val navController = rememberNavController()
                         NavHost(
                             navController = navController,
-                            startDestination = Destinations.Home()
+                            startDestination = "home"
                         ) {
                             //HOME
-                            composable<Destinations.Home> {
+                            composable("home") {
                                 HomeScreen(
                                     movieCount = 0,
                                     bookCount = 0,
@@ -49,13 +49,13 @@ class MainActivity : ComponentActivity() {
                                 )
                             }
                             //MOVIES
-                            composable<Destinations.Movie> {
+                            composable("movies") {
                                 MovieScreen(navController = navController)
                             }
-                            composable<Destinations.CreateMovie> {
+                            composable("create_movie") {
                                 CreateMovieScreen(navController = navController)
                             }
-                            composable<Destinations.MovieDetail> { backStackEntry ->
+                            composable("movie_detail/{movieId}") { backStackEntry ->
                                 val movieId = backStackEntry.arguments?.getInt("movieId") ?: 0
                                 MovieDetailScreen(
                                     movieId = movieId,
@@ -63,13 +63,13 @@ class MainActivity : ComponentActivity() {
                                 )
                             }
                             //BOOKS
-                            composable<Destinations.Book> {
+                            composable("books") {
                                 BookScreen(navController = navController)
                             }
-                            composable<Destinations.CreateBook> {
+                            composable("create_book") {
                                 CreateBookScreen(navController = navController)
                             }
-                            composable<Destinations.BookDetail> { backStackEntry ->
+                            composable("book_detail/{bookId}") { backStackEntry ->
                                 val bookId = backStackEntry.arguments?.getInt("bookId") ?: 0
                                 BookDetailScreen(
                                     bookId = bookId,
@@ -77,13 +77,13 @@ class MainActivity : ComponentActivity() {
                                 )
                             }
                             //VIDEO GAMES
-                            composable<Destinations.VideoGame> {
+                            composable("video_games") {
                                 VideoGameScreen(navController = navController)
                             }
-                            composable<Destinations.CreateVideoGame> {
+                            composable("create_video_game") {
                                 CreateVideoGameScreen(navController = navController)
                             }
-                            composable<Destinations.VideoGameDetail> { backStackEntry ->
+                            composable("video_game_detail/{videoGameId}") { backStackEntry ->
                                 val videoGameId = backStackEntry.arguments?.getInt("videoGameId") ?: 0
                                 VideoGameDetailScreen(
                                     videoGameId = videoGameId,
@@ -91,13 +91,13 @@ class MainActivity : ComponentActivity() {
                                 )
                             }
                             //BOARD GAMES
-                            composable<Destinations.BoardGame> {
+                            composable("board_games") {
                                 BoardGameScreen(navController = navController)
                             }
-                            composable<Destinations.CreateBoardGame> {
+                            composable("create_board_game") {
                                 CreateBoardGameScreen(navController = navController)
                             }
-                            composable<Destinations.BoardGameDetail> { backStackEntry ->
+                            composable("board_game_detail/{boardGameId}") { backStackEntry ->
                                 val boardGameId = backStackEntry.arguments?.getInt("boardGameId") ?: 0
                                 BoardGameDetailScreen(
                                     boardGameId = boardGameId,
