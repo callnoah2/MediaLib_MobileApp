@@ -6,22 +6,25 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import com.example.assignment3.models.VideoGame
+import com.example.assignment3.repositories.VideoGamesRepository
 
 class VideoGameViewModel : ViewModel() {
-    private val _videoGames = MutableStateFlow<List<VideoGame>>(emptyList())
+    private val _videoGames = MutableStateFlow(emptyList<VideoGame>())
     val videoGames: StateFlow<List<VideoGame>> = _videoGames
 
-    fun addVideoGame(videoGame: VideoGame) {
+    init {
         viewModelScope.launch {
-            _videoGames.value = _videoGames.value + videoGame
+            VideoGamesRepository.VideoGames.collect {
+                _videoGames.value = it
+            }
         }
-    }
-
-    fun getNextId(): Int {
-        return _videoGames.value.size + 1
     }
 
     fun getVideoGameById(id: Int): VideoGame? {
         return _videoGames.value.find { it.id == id }
+    }
+
+    fun getNextId(): Int {
+        return _videoGames.value.maxOfOrNull { it.id }?.plus(1) ?: 0
     }
 }

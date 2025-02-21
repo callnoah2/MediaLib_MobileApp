@@ -25,6 +25,9 @@ import com.example.assignment3.screens.BoardGames.CreateBoardGameScreen
 import com.example.assignment3.screens.BoardGames.BoardGameDetailScreen
 import androidx.navigation.compose.composable
 import com.example.assignment3.repositories.BoardGamesRepository
+import com.example.assignment3.repositories.BooksRepository
+import com.example.assignment3.repositories.MoviesRepository
+import com.example.assignment3.repositories.VideoGamesRepository
 
 
 class MainActivity : ComponentActivity() {
@@ -44,9 +47,9 @@ class MainActivity : ComponentActivity() {
                             // HOME
                             composable("home") {
                                 HomeScreen(
-                                    movieCount = 100,
-                                    bookCount = 100,
-                                    gameCount = 100,
+                                    movieCount = MoviesRepository.movieId,
+                                    bookCount = BooksRepository.bookId,
+                                    gameCount = VideoGamesRepository.videoGameId,
                                     boardGameCount = BoardGamesRepository.boardGameId,
                                     navController = navController
                                 )

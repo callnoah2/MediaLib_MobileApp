@@ -13,19 +13,15 @@ import com.example.assignment3.viewModels.BookViewModel
 fun BookDetailScreen(navController: NavController, bookId: Int, viewModel: BookViewModel = viewModel()) {
     val book = viewModel.getBookById(bookId)
 
-    Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
-        Text(text = book?.title ?: "Unknown Book", style = MaterialTheme.typography.headlineLarge, modifier = Modifier.padding(bottom = 16.dp))
-        Text(text = "Author: ${book?.author ?: "Unknown"}", style = MaterialTheme.typography.bodyLarge, modifier = Modifier.padding(bottom = 8.dp))
-        Text(text = "Format: ${book?.format ?: "Unknown"}", style = MaterialTheme.typography.bodyLarge, modifier = Modifier.padding(bottom = 8.dp))
-        Text(text = "Number of Pages: ${book?.numPages ?: "Unknown"}", style = MaterialTheme.typography.bodyLarge, modifier = Modifier.padding(bottom = 8.dp))
-        Text(text = "Genre: ${book?.genre ?: "Unknown"}", style = MaterialTheme.typography.bodyLarge, modifier = Modifier.padding(bottom = 8.dp))
-        Text(text = "Notes: ${book?.notes ?: "No notes available"}", style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(bottom = 8.dp))
-
-        Button(
-            onClick = { navController.popBackStack() },
-            modifier = Modifier.fillMaxWidth().padding(top = 16.dp)
-        ) {
-            Text("Back")
+    if (book != null) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Text(text = book.title, style = MaterialTheme.typography.headlineLarge)
+            Text(text = "by ${book.author}", style = MaterialTheme.typography.bodyLarge)
+            Text(text = "Format: ${book.format}", style = MaterialTheme.typography.bodyLarge)
+            Text(text = "Genre: ${book.genre}", style = MaterialTheme.typography.bodyLarge)
+            Text(text = "Pages: ${book.numPages}", style = MaterialTheme.typography.bodyLarge)
         }
+    } else {
+        Text(text = "Book not found", style = MaterialTheme.typography.headlineLarge)
     }
 }
