@@ -3,9 +3,13 @@ package com.example.assignment3.screens.VideoGames
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -20,9 +24,14 @@ fun VideoGameScreen(navController: NavController, viewModel: VideoGameViewModel 
     Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
         Text(text = "Video Games", style = MaterialTheme.typography.headlineLarge, modifier = Modifier.padding(bottom = 16.dp))
 
-        LazyColumn(modifier = Modifier.weight(1f)) {
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(3),
+            modifier = Modifier.padding(16.dp)
+        ) {
             items(videoGames) { game ->
-                VideoGameItem(game = game, onClick = { navController.navigate("video_game/${game.id}") })
+                VideoGameItem(game = game, onClick = {
+                    navController.navigate("video_game_detail/${game.id}")
+                })
             }
         }
 
@@ -38,15 +47,16 @@ fun VideoGameScreen(navController: NavController, viewModel: VideoGameViewModel 
 @Composable
 fun VideoGameItem(game: VideoGame, onClick: () -> Unit) {
     Card(
-        modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp).clickable(onClick = onClick)
+        modifier = Modifier
+            .padding(8.dp)
+            .aspectRatio(1f)
+            .clickable(onClick = onClick)
     ) {
-        Column(modifier = Modifier.padding(16.dp)) {
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier.fillMaxSize()
+        ) {
             Text(text = game.title, style = MaterialTheme.typography.bodyLarge)
-            Text(text = game.developer, style = MaterialTheme.typography.bodyMedium)
-            Text(text = game.genre, style = MaterialTheme.typography.bodyMedium)
-            Text(text = game.rating, style = MaterialTheme.typography.bodyMedium)
-            Text(text = game.platform, style = MaterialTheme.typography.bodyMedium)
-            Text(text = game.notes, style = MaterialTheme.typography.bodySmall)
         }
     }
 }

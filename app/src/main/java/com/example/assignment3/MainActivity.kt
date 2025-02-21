@@ -62,7 +62,7 @@ class MainActivity : ComponentActivity() {
                                 CreateMovieScreen(navController = navController)
                             }
                             composable("movie_detail/{movieId}") { backStackEntry ->
-                                val movieId = backStackEntry.arguments?.getInt("movieId") ?: 0
+                                val movieId = backStackEntry.arguments?.getString("movieId")?.toIntOrNull() ?: 0
                                 MovieDetailScreen(
                                     movieId = movieId,
                                     navController = navController
@@ -76,7 +76,7 @@ class MainActivity : ComponentActivity() {
                                 CreateBookScreen(navController = navController)
                             }
                             composable("book_detail/{bookId}") { backStackEntry ->
-                                val bookId = backStackEntry.arguments?.getInt("bookId") ?: 0
+                                val bookId = backStackEntry.arguments?.getString("bookId")?.toIntOrNull() ?: 0
                                 BookDetailScreen(
                                     bookId = bookId,
                                     navController = navController
@@ -90,7 +90,7 @@ class MainActivity : ComponentActivity() {
                                 CreateVideoGameScreen(navController = navController)
                             }
                             composable("video_game_detail/{videoGameId}") { backStackEntry ->
-                                val videoGameId = backStackEntry.arguments?.getInt("videoGameId") ?: 0
+                                val videoGameId = backStackEntry.arguments?.getString("videoGameId")?.toIntOrNull() ?: 0
                                 VideoGameDetailScreen(
                                     videoGameId = videoGameId,
                                     navController = navController

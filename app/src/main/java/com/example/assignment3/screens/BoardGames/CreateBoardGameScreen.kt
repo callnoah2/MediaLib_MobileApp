@@ -15,9 +15,9 @@ import com.example.assignment3.repositories.BoardGamesRepository
 @Composable
 fun CreateBoardGameScreen(
     navController: NavController,
-    viewModel: BoardGameViewModel = BoardGameViewModel(),     // Shared instance
-    mainViewModel: MainViewModel = MainViewModel(),          // Shared instance
-    repository: BoardGamesRepository = BoardGamesRepository // Shared instance
+    viewModel: BoardGameViewModel = BoardGameViewModel(),
+    mainViewModel: MainViewModel = MainViewModel(),
+    repository: BoardGamesRepository = BoardGamesRepository
 ) {
     var title by remember { mutableStateOf("") }
     var minPlayers by remember { mutableStateOf(1) }

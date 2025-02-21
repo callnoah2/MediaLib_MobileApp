@@ -5,13 +5,19 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.assignment3.models.Book
+import com.example.assignment3.repositories.BooksRepository
 import com.example.assignment3.viewModels.BookViewModel
+import com.example.assignment3.viewModels.MainViewModel
 
 @Composable
-fun CreateBookScreen(navController: NavController, viewModel: BookViewModel = viewModel()) {
+fun CreateBookScreen(
+    navController: NavController,
+    viewModel: BookViewModel = BookViewModel(),
+    mainViewModel: MainViewModel = MainViewModel(),
+    repository: BooksRepository = BooksRepository
+){
     var title by remember { mutableStateOf("") }
     var author by remember { mutableStateOf("") }
     var format by remember { mutableStateOf("") }
@@ -19,8 +25,14 @@ fun CreateBookScreen(navController: NavController, viewModel: BookViewModel = vi
     var genre by remember { mutableStateOf("") }
     var notes by remember { mutableStateOf("") }
 
-    Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
-        Text(text = "Add Book", style = MaterialTheme.typography.headlineLarge, modifier = Modifier.padding(bottom = 16.dp))
+    Column(modifier = Modifier
+        .fillMaxSize().
+        padding(16.dp)
+    ) {
+        Text(
+            text = "Add Book",
+            style = MaterialTheme.typography.headlineLarge,
+            modifier = Modifier.padding(bottom = 16.dp))
 
         OutlinedTextField(
             value = title,
@@ -66,8 +78,8 @@ fun CreateBookScreen(navController: NavController, viewModel: BookViewModel = vi
 
         Button(
             onClick = {
-                if (title.isNotEmpty() && author.isNotEmpty()) {
-                    viewModel.addBook(Book(
+                if (title.isNotEmpty()) {
+                    val newBook = Book(
                         id = viewModel.getNextId(),
                         title = title,
                         author = author,
@@ -75,7 +87,9 @@ fun CreateBookScreen(navController: NavController, viewModel: BookViewModel = vi
                         numPages = numPages,
                         genre = genre,
                         notes = notes
-                    ))
+                    )
+                    repository.addBook(newBook.title, newBook.author, newBook.format, newBook.numPages, newBook.genre, newBook.notes)
+                    mainViewModel.incrementBookCount()
                     navController.popBackStack()
                 }
             },

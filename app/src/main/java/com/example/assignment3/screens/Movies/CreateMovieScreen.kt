@@ -8,10 +8,17 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.assignment3.models.Movie
+import com.example.assignment3.repositories.MoviesRepository
+import com.example.assignment3.viewModels.MainViewModel
 import com.example.assignment3.viewModels.MovieViewModel
 
 @Composable
-fun CreateMovieScreen(navController: NavController, viewModel: MovieViewModel = viewModel()) {
+fun CreateMovieScreen(
+    navController: NavController,
+    viewModel: MovieViewModel = viewModel(),
+    mainViewModel: MainViewModel = MainViewModel(),
+    repository: MoviesRepository = MoviesRepository
+){
     var title by remember { mutableStateOf("") }
     var genre by remember { mutableStateOf("") }
     var rating by remember { mutableStateOf("") }
@@ -22,40 +29,44 @@ fun CreateMovieScreen(navController: NavController, viewModel: MovieViewModel = 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+            .padding(16.dp)
     ) {
-        TextField(
+        Text(
+            text = "Add Movie",
+            style = MaterialTheme.typography.headlineLarge,
+            modifier = Modifier.padding(bottom = 16.dp)
+        )
+        OutlinedTextField(
             value = title,
             onValueChange = { title = it },
             label = { Text("Title") },
             modifier = Modifier.fillMaxWidth()
         )
-        TextField(
+        OutlinedTextField(
             value = genre,
             onValueChange = { genre = it },
             label = { Text("Genre") },
             modifier = Modifier.fillMaxWidth()
         )
-        TextField(
+        OutlinedTextField(
             value = rating,
             onValueChange = { rating = it },
             label = { Text("Rating") },
             modifier = Modifier.fillMaxWidth()
         )
-        TextField(
+        OutlinedTextField(
             value = runtime,
             onValueChange = { runtime = it },
             label = { Text("Runtime (minutes)") },
             modifier = Modifier.fillMaxWidth()
         )
-        TextField(
+        OutlinedTextField(
             value = format,
             onValueChange = { format = it },
             label = { Text("Format") },
             modifier = Modifier.fillMaxWidth()
         )
-        TextField(
+        OutlinedTextField(
             value = notes,
             onValueChange = { notes = it },
             label = { Text("Notes") },
@@ -63,18 +74,18 @@ fun CreateMovieScreen(navController: NavController, viewModel: MovieViewModel = 
         )
         Button(
             onClick = {
-                if (title.isNotEmpty() && genre.isNotEmpty() && rating.isNotEmpty() && runtime.isNotEmpty() && format.isNotEmpty()) {
-                    viewModel.addMovie(
-                        Movie(
-                            id = viewModel.getNextId(),
-                            title = title,
-                            genre = genre,
-                            rating = rating,
-                            runtime = runtime.toIntOrNull() ?: 0,
-                            format = format,
-                            notes = notes
-                        )
+                if (title.isNotEmpty()) {
+                    val newMovie = Movie(
+                        id = viewModel.getNextId(),
+                        title = title,
+                        genre = genre,
+                        rating = rating,
+                        runtime = runtime.toIntOrNull() ?: 0,
+                        format = format,
+                        notes = notes
                     )
+                    repository.addMovie(newMovie.title, newMovie.genre, newMovie.rating, newMovie.runtime, newMovie.format, newMovie.notes)
+                    mainViewModel.incrementMovieCount()
                     navController.popBackStack()
                 }
             },
