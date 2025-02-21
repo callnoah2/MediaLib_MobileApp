@@ -101,7 +101,7 @@ class MainActivity : ComponentActivity() {
                                 CreateBoardGameScreen(navController = navController)
                             }
                             composable("board_game_detail/{boardGameId}") { backStackEntry ->
-                                val boardGameId = backStackEntry.arguments?.getInt("boardGameId") ?: 0
+                                val boardGameId = backStackEntry.arguments?.getString("boardGameId")?.toIntOrNull() ?: 0
                                 BoardGameDetailScreen(
                                     boardGameId = boardGameId,
                                     navController = navController

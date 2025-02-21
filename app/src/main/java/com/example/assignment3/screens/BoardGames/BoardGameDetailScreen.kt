@@ -1,5 +1,6 @@
 package com.example.assignment3.screens.BoardGames
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.*
@@ -13,6 +14,7 @@ import com.example.assignment3.viewModels.BoardGameViewModel
 @Composable
 fun BoardGameDetailScreen(navController: NavController, boardGameId: Int, viewModel: BoardGameViewModel = viewModel()) {
     val game = viewModel.getBoardGameById(boardGameId)
+    Log.d("FoundBoardGame", "game ID: $boardGameId")
 
     if (game != null) {
         Column(modifier = Modifier.padding(16.dp)) {
