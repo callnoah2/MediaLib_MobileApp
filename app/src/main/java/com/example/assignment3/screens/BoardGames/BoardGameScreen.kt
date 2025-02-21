@@ -2,8 +2,9 @@ package com.example.assignment3.screens.BoardGames
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -20,13 +21,14 @@ fun BoardGameScreen(navController: NavController, viewModel: BoardGameViewModel 
     Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
         Text(text = "Board Games", style = MaterialTheme.typography.headlineLarge, modifier = Modifier.padding(bottom = 16.dp))
 
-        LazyColumn(
-            modifier = Modifier
-                .padding(16.dp)) {
-            items(boardGames) {
-                Row {
-                    Text(it.title)
-                }
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(3),
+            modifier = Modifier.padding(16.dp)
+        ) {
+            items(boardGames) { game ->
+                BoardGameItem(game = game, onClick = {
+                    navController.navigate("board_game_detail/${game.id}")
+                })
             }
         }
 
@@ -42,7 +44,10 @@ fun BoardGameScreen(navController: NavController, viewModel: BoardGameViewModel 
 @Composable
 fun BoardGameItem(game: BoardGame, onClick: () -> Unit) {
     Card(
-        modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp).clickable(onClick = onClick)
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp)
+            .clickable(onClick = onClick)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(text = game.title, style = MaterialTheme.typography.bodyLarge)
