@@ -24,6 +24,9 @@ import com.example.assignment3.screens.BoardGames.BoardGameScreen
 import com.example.assignment3.screens.BoardGames.CreateBoardGameScreen
 import com.example.assignment3.screens.BoardGames.BoardGameDetailScreen
 import androidx.navigation.compose.composable
+import androidx.compose.runtime.*
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.assignment3.viewModels.MainViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,6 +34,12 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             Assignment3Theme {
+                val mainViewModel: MainViewModel = viewModel()
+                val movieCount by mainViewModel.movieCount.collectAsState()
+                val bookCount by mainViewModel.bookCount.collectAsState()
+                val videoGameCount by mainViewModel.videoGameCount.collectAsState()
+                val boardGameCount by mainViewModel.boardGameCount.collectAsState()
+
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Box(modifier = Modifier.padding(innerPadding)) {
                         val navController = rememberNavController()
@@ -38,13 +47,13 @@ class MainActivity : ComponentActivity() {
                             navController = navController,
                             startDestination = "home"
                         ) {
-                            //HOME
+                            // HOME
                             composable("home") {
                                 HomeScreen(
-                                    movieCount = 0,
-                                    bookCount = 0,
-                                    gameCount = 0,
-                                    boardGameCount = 0,
+                                    movieCount = movieCount,
+                                    bookCount = bookCount,
+                                    gameCount = videoGameCount,
+                                    boardGameCount = boardGameCount,
                                     navController = navController
                                 )
                             }

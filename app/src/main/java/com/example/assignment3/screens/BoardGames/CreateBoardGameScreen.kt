@@ -1,37 +1,44 @@
 package com.example.assignment3.screens.BoardGames
 
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.assignment3.models.BoardGame
 import com.example.assignment3.viewModels.BoardGameViewModel
+import com.example.assignment3.viewModels.MainViewModel
+import com.example.assignment3.repositories.BoardGamesRepository
 
 @Composable
-fun CreateBoardGameScreen(navController: NavController, viewModel: BoardGameViewModel = viewModel()) {
+fun CreateBoardGameScreen(
+    navController: NavController,
+    viewModel: BoardGameViewModel = BoardGameViewModel(),     // Shared instance
+    mainViewModel: MainViewModel = MainViewModel(),          // Shared instance
+    repository: BoardGamesRepository = BoardGamesRepository // Shared instance
+) {
     var title by remember { mutableStateOf("") }
-    var notes by remember { mutableStateOf("") }
     var minPlayers by remember { mutableStateOf(1) }
     var maxPlayers by remember { mutableStateOf(4) }
     var type by remember { mutableStateOf("") }
+    var notes by remember { mutableStateOf("") }
 
-    Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
-        Text(text = "Add Board Game", style = MaterialTheme.typography.headlineLarge, modifier = Modifier.padding(bottom = 16.dp))
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .padding(16.dp)
+    ) {
+        Text(
+            text = "Add Board Game",
+            style = MaterialTheme.typography.headlineLarge,
+            modifier = Modifier.padding(bottom = 16.dp)
+        )
 
         OutlinedTextField(
             value = title,
             onValueChange = { title = it },
             label = { Text("Title") },
-            modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
-        )
-
-        OutlinedTextField(
-            value = notes,
-            onValueChange = { notes = it },
-            label = { Text("Notes") },
             modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
         )
 
@@ -56,17 +63,27 @@ fun CreateBoardGameScreen(navController: NavController, viewModel: BoardGameView
             modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
         )
 
+        OutlinedTextField(
+            value = notes,
+            onValueChange = { notes = it },
+            label = { Text("Notes") },
+            modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
+        )
+
         Button(
             onClick = {
                 if (title.isNotEmpty()) {
-                    viewModel.addBoardGame(BoardGame(
+                    val newBoardGame = BoardGame(
                         id = viewModel.getNextId(),
                         title = title,
                         minPlayers = minPlayers,
                         maxPlayers = maxPlayers,
                         type = type,
                         notes = notes
-                    ))
+                    )
+                    repository.addBoardGame(newBoardGame.title, newBoardGame.minPlayers, newBoardGame.maxPlayers, newBoardGame.type, newBoardGame.notes)
+                    Log.d("CreateBoardGameScreen", "New BoardGame added: $newBoardGame")
+                    mainViewModel.incrementBoardGameCount()
                     navController.popBackStack()
                 }
             },

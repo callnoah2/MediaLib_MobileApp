@@ -20,9 +20,13 @@ fun BoardGameScreen(navController: NavController, viewModel: BoardGameViewModel 
     Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
         Text(text = "Board Games", style = MaterialTheme.typography.headlineLarge, modifier = Modifier.padding(bottom = 16.dp))
 
-        LazyColumn(modifier = Modifier.weight(1f)) {
-            items(boardGames) { game ->
-                BoardGameItem(game = game, onClick = { navController.navigate("board_game/${game.id}") })
+        LazyColumn(
+            modifier = Modifier
+                .padding(16.dp)) {
+            items(boardGames) {
+                Row {
+                    Text(it.title)
+                }
             }
         }
 

@@ -2,18 +2,21 @@ package com.example.assignment3.viewModels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.assignment3.models.BoardGame
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import com.example.assignment3.models.BoardGame
+import com.example.assignment3.repositories.BoardGamesRepository
 import kotlinx.coroutines.launch
 
 class BoardGameViewModel : ViewModel() {
-    private val _boardGames = MutableStateFlow<List<BoardGame>>(emptyList())
+    private val _boardGames = MutableStateFlow(emptyList<BoardGame>())
     val boardGames: StateFlow<List<BoardGame>> = _boardGames
 
-    fun addBoardGame(boardGame: BoardGame) {
+    init {
         viewModelScope.launch {
-            _boardGames.value = _boardGames.value + boardGame
+            BoardGamesRepository.BoardGames.collect {
+                _boardGames.value = it
+            }
         }
     }
 

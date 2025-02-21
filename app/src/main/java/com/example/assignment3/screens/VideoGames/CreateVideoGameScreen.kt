@@ -9,9 +9,10 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.assignment3.models.VideoGame
 import com.example.assignment3.viewModels.VideoGameViewModel
+import com.example.assignment3.viewModels.MainViewModel
 
 @Composable
-fun CreateVideoGameScreen(navController: NavController, viewModel: VideoGameViewModel = viewModel()) {
+fun CreateVideoGameScreen(navController: NavController, viewModel: VideoGameViewModel = viewModel(), mainViewModel: MainViewModel = viewModel()) {
     var title by remember { mutableStateOf("") }
     var developer by remember { mutableStateOf("") }
     var genre by remember { mutableStateOf("") }
@@ -75,6 +76,7 @@ fun CreateVideoGameScreen(navController: NavController, viewModel: VideoGameView
                             notes = notes
                         )
                     )
+                    mainViewModel.incrementVideoGameCount()
                     navController.popBackStack()
                 }
             },
