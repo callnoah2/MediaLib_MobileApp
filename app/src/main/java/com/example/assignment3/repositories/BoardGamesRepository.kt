@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
 object BoardGamesRepository {
-    private var boardGameId = 0
+    var boardGameId = 0
     private val _BoardGames = MutableStateFlow(emptyList<BoardGame>())
     val BoardGames: StateFlow<List<BoardGame>> = _BoardGames
 

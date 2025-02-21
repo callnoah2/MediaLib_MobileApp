@@ -24,9 +24,8 @@ import com.example.assignment3.screens.BoardGames.BoardGameScreen
 import com.example.assignment3.screens.BoardGames.CreateBoardGameScreen
 import com.example.assignment3.screens.BoardGames.BoardGameDetailScreen
 import androidx.navigation.compose.composable
-import androidx.compose.runtime.*
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.assignment3.viewModels.MainViewModel
+import com.example.assignment3.repositories.BoardGamesRepository
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,11 +33,6 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             Assignment3Theme {
-                val mainViewModel: MainViewModel = viewModel()
-                val movieCount by mainViewModel.movieCount.collectAsState()
-                val bookCount by mainViewModel.bookCount.collectAsState()
-                val videoGameCount by mainViewModel.videoGameCount.collectAsState()
-                val boardGameCount by mainViewModel.boardGameCount.collectAsState()
 
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Box(modifier = Modifier.padding(innerPadding)) {
@@ -50,10 +44,10 @@ class MainActivity : ComponentActivity() {
                             // HOME
                             composable("home") {
                                 HomeScreen(
-                                    movieCount = movieCount,
-                                    bookCount = bookCount,
-                                    gameCount = videoGameCount,
-                                    boardGameCount = boardGameCount,
+                                    movieCount = 100,
+                                    bookCount = 100,
+                                    gameCount = 100,
+                                    boardGameCount = BoardGamesRepository.boardGameId,
                                     navController = navController
                                 )
                             }
