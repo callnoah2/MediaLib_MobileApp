@@ -1,5 +1,6 @@
 package com.example.assignment3.screens.BoardGames
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -28,6 +29,7 @@ fun BoardGameScreen(navController: NavController, viewModel: BoardGameViewModel 
         ) {
             items(boardGames) { game ->
                 BoardGameItem(game = game, onClick = {
+                    Log.d("WantedBoardGame", "game ID: ${game.id}")
                     navController.navigate("board_game_detail/${game.id}")
                 })
             }
